@@ -1,9 +1,11 @@
 deps := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+flags := -Ofast -std=c++20
 
+all-polly: prebuild pollysetup $(deps)
 all: prebuild $(deps)
 
 %.o: %.cpp
-	clang++ -Ofast -std=c++20 -mllvm -polly -mllvm -polly-parallel -lgomp $< -o out/cpp/$(basename $<)
+	clang++ $(flags) $< -o out/cpp/$(basename $<)
 	cp $(basename $<).py out/py/
 
 clean:
@@ -15,3 +17,6 @@ setup:
 	-mkdir out/py
 
 prebuild: clean setup
+
+pollysetup:
+	$(eval flags := $(flags) -mllvm -polly -mllvm -polly-parallel -lgomp)
