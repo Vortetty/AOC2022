@@ -1,8 +1,8 @@
 deps := $(patsubst %.cpp,%.o,$(wildcard *.cpp))
-flags := -Ofast -std=c++20
+flags := -Ofast -std=c++20 -s
 
-all-polly: prebuild pollysetup $(deps)
 all: prebuild $(deps)
+all-polly: prebuild pollysetup $(deps)
 
 %.o: %.cpp
 	clang++ $(flags) $< -o out/cpp/$(basename $<)
