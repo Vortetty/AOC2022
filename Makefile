@@ -1,4 +1,4 @@
-deps := $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(wildcard *.py)
+deps := $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.py,%.py.o,$(wildcard *.py))
 flags := -Ofast -std=c++20 -s
 
 all: prebuild $(deps)
@@ -7,7 +7,7 @@ all-polly: prebuild pollysetup $(deps)
 %.o: %.cpp
 	clang++ $(flags) $< -o out/cpp/$(basename $<)
 
-%.py: %.py
+%.py.o: %.py
 	cp $(basename $<).py out/py/
 
 clean:
