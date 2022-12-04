@@ -16,27 +16,26 @@ int main() {
     std::string line;
     uint_fast16_t containTotal = 0,
                   isectTotal = 0;
+    std::stringstream in;
+    std::string tmp1, tmp2, tmp3, tmp4;
+    uint_fast16_t e1[2], e2[2];
     while (std::getline(input, line)) {
-        std::string tmp1, tmp2, tmp3, tmp4;
-        std::stringstream in(line);
+        in.str(line);
+        in.clear();
         std::getline(in, tmp1, ',');
         std::getline(in, tmp2, ',');
         in.str(tmp1);
         in.clear();
         std::getline(in, tmp3, '-');
         std::getline(in, tmp4, '-');
-        uint_fast16_t e1[2] = {
-            (uint_fast16_t)atoi(tmp3.c_str()),
-            (uint_fast16_t)atoi(tmp4.c_str())
-        };
+        e1[0] = (uint_fast16_t)atoi(tmp3.c_str());
+        e1[1] = (uint_fast16_t)atoi(tmp4.c_str());
         in.str(tmp2);
         in.clear();
         std::getline(in, tmp3, '-');
         std::getline(in, tmp4, '-');
-        uint_fast16_t e2[2] = {
-            (uint_fast16_t)atoi(tmp3.c_str()),
-            (uint_fast16_t)atoi(tmp4.c_str())
-        };
+        e2[0] = (uint_fast16_t)atoi(tmp3.c_str());
+        e2[1] = (uint_fast16_t)atoi(tmp4.c_str());
 
         if ((e1[0] <= e2[0] && e1[1] >= e2[1]) || (e2[0] <= e1[0] && e2[1] >= e1[1])) containTotal++;
         if ((e2[0] >= e1[0] && e2[0] <= e1[1]) || (e1[0] >= e2[0] && e1[0] <= e2[1])) isectTotal++;
