@@ -1,4 +1,4 @@
-SOLVE_PART = 2 # 1 or 2
+SOLVE_PART = 1 # 1 or 2
 
 with open("4.txt", "r") as f:
     if SOLVE_PART == 1:

@@ -3,11 +3,22 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <sstream>
 
 uint_fast8_t getPri(uint_fast8_t a) {
     if (a > 0x60) return a - 0x60;
     else          return a - 0x26;
+}
+
+// faster
+// https://stackoverflow.com/a/16826908
+// https://web.archive.org/web/20221206083933/https://stackoverflow.com/questions/16826422/c-most-efficient-way-to-convert-string-to-int-faster-than-atoi/16826908
+uint_fast16_t fast_atoi( const char * str )
+{
+    uint_fast16_t val = 0;
+    while( *str ) {
+        val = val*10 + (*str++ - '0');
+    }
+    return val;
 }
 
 int main() {
@@ -16,26 +27,15 @@ int main() {
     std::string line;                   // current line
     uint_fast16_t containTotal = 0,     // part 1's counter
                   isectTotal = 0;       // part 2's counter
-    std::stringstream in;               // stringstream to use for splitting on a character since getline only supports streams
-    std::string tmp1, tmp2, tmp3, tmp4; // in order: elf 1's raw range, elf 2's raw range, current elf's beginning int, current elf's end int (last two are used for both elves at different times)
     uint_fast16_t e1[2], e2[2];         // elf 1 and elf 2
-    while (std::getline(input, line)) {
-        in.str(line);                              // Clear and reinitialize stringstream with the current line
-        in.clear();                                // Clear and reinitialize stringstream with the current line
-        std::getline(in, tmp1, ',');               // Get elf 1's raw range into tmp1, treating "," as the newline char (this is janky but it works)
-        std::getline(in, tmp2, ',');               // Get elf 2's raw range into tmp2, treating "," as the newline char (this is janky but it works)
-        in.str(tmp1);                              // Clear and reinitialize stringstream with elf 1's raw range
-        in.clear();                                // Clear and reinitialize stringstream with elf 1's raw range
-        std::getline(in, tmp3, '-');               // Get elf 1's beginning int into tmp3 (as string), treating "-" as the newline char
-        std::getline(in, tmp4, '-');               // Get elf 1's end int into tmp4 (as string), treating "-" as the newline char
-        e1[0] = (uint_fast16_t)atoi(tmp3.c_str()); // get int from elf1's beginning int string then store it
-        e1[1] = (uint_fast16_t)atoi(tmp4.c_str()); // get int from elf1's end int string then store it
-        in.str(tmp2);                              // Clear and reinitialize stringstream with elf 2's raw range
-        in.clear();                                // Clear and reinitialize stringstream with elf 2's raw range
-        std::getline(in, tmp3, '-');               // Get elf 2's beginning int into tmp3 (as string), treating "-" as the newline char
-        std::getline(in, tmp4, '-');               // Get elf 2's end int into tmp4 (as string), treating "-" as the newline char
-        e2[0] = (uint_fast16_t)atoi(tmp3.c_str()); // get int from elf2's beginning int string then store it
-        e2[1] = (uint_fast16_t)atoi(tmp4.c_str()); // get int from elf2's end int string then store it
+    while (std::getline(input, line, '-')) {
+        e1[0] = fast_atoi(line.c_str());
+        std::getline(input, line, ',');
+        e1[1] = fast_atoi(line.c_str());
+        std::getline(input, line, '-');
+        e2[0] = fast_atoi(line.c_str());
+        std::getline(input, line, '\n');
+        e2[1] = fast_atoi(line.c_str());
 
         if ((e1[0] <= e2[0] && e1[1] >= e2[1]) || (e2[0] <= e1[0] && e2[1] >= e1[1])) containTotal++; // check if elf 1's range is inside elf 2's or vice-versa, if it is increment part 1's counter
         if ((e2[0] >= e1[0] && e2[0] <= e1[1]) || (e1[0] >= e2[0] && e1[0] <= e2[1])) isectTotal++;   // check if either range starts within the other, if one does increment part 2's counter
