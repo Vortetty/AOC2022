@@ -1,4 +1,4 @@
-SOLVE_PART = 2 # 1 or 2
+SOLVE_PART = 1 # 1 or 2
 
 def tryInt(x):
     try:
