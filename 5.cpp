@@ -56,10 +56,8 @@ int main() {
         i2i = atoi(i2.c_str()) - 1;
         i3i = atoi(i3.c_str()) - 1;
 
-        for (int i = 0; i < i1i; i++) {
-            crates1[i3i].push_back(crates1[i2i].back());
-            crates1[i2i].pop_back();
-        }
+        crates1[i3i].insert(crates1[i3i].end(), std::make_move_iterator(crates1[i2i].rbegin()), std::make_move_iterator(crates1[i2i].rbegin() + i1i));
+        crates1[i2i].erase(crates1[i2i].end() - i1i, crates1[i2i].end());
 
         crates2[i3i].insert(crates2[i3i].end(), std::make_move_iterator(crates2[i2i].end() - i1i), std::make_move_iterator(crates2[i2i].end()));
         crates2[i2i].erase(crates2[i2i].end() - i1i, crates2[i2i].end());
