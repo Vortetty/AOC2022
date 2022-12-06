@@ -11,7 +11,7 @@ uint_fast8_t getPri(uint_fast8_t a) {
 
 // faster
 // https://stackoverflow.com/a/16826908
-// https://web.archive.org/web/20221206083933/https://stackoverflow.com/questions/16826422/c-most-efficient-way-to-convert-string-to-int-faster-than-atoi/16826908
+// https://web.archive.org/web/20221206083933/https://stackoverflow.com/questions/16826422/c-most-efficient-way-to-convert-string-to-int-faster-than-atoi/16826908 (from paddy's answer)
 uint_fast16_t fast_atoi( const char * str )
 {
     uint_fast16_t val = 0;
