@@ -85,6 +85,6 @@ with open("8.txt","r") as f:
             color = f"\033[38;2;{int(tmpColor[0]*255)};{int(tmpColor[1]*255)};{int(tmpColor[2]*255)}m"
             print(f"{color}{int(grid[i][j])}", end=bcolors.ENDC)
         print()
-    print(f"{bcolors.ENDC}(green trees are hidden, yellow ones are visible, blue tree is the ideal tree, the brighter the color the closer it is to ideal)")
+    print(f"\033[38;2;0;255;0mGreen\033[0m trees are hidden\n\033[38;2;255;255;0myellow\033[0m ones are visible\n\033[38;2;90;200;255mblue\033[0m tree is the ideal tree, the brighter the color the closer it is to ideal\n(\033[38;2;{0xff};{0x00};{0x00}m2\033[38;2;{0xff};{0x55};{0x00}m4 \033[38;2;{0xff};{0xaa};{0x00}mb\033[38;2;{0xff};{0xff};{0x00}mi\033[38;2;{0x55};{0xff};{0x00}mt \033[38;2;{0x00};{0xaa};{0x55}mc\033[38;2;{0x00};{0x00};{0xff}mo\033[38;2;{0x32};{0x00};{0xac}ml\033[38;2;{0x63};{0x00};{0x9d}mo\033[38;2;{0x94};{0x00};{0xd3}mr\033[0m supporting terminal required for full effect)")
     print(f"Visible Trees:     {visible}")
     print(f"Best Tree's Score: {bestTreeVal}")
